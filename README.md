@@ -18,17 +18,10 @@ MagicMirror² focuses on a modular plugin system and uses [Electron](http://elec
 
 - [Installation](#installation)
   - [Raspberry Pi](#raspberry-pi)
-  - [General](#general)
-  - [Server Only](#server-only)
-  - [Client Only](#client-only)
-  - [Docker](#docker)
 - [Configuration](#configuration)
 - [Modules](#modules)
 - [Updating](#updating)
-- [Known Issues](#known-issues)
-- [Community](#community)
-- [Contributing Guidelines](#contributing-guidelines)
-- [Manifesto](#manifesto)
+
 
 ## Installation
 
@@ -45,69 +38,6 @@ Execute the following command on your Raspberry Pi to install MagicMirror²:
 ```bash
 bash -c "$(curl -sL https://raw.githubusercontent.com/MichMich/MagicMirror/master/installers/raspberry.sh)"
 ```
-
-#### Manual Installation
-
-1. Download and install the latest *Node.js* version:
-- `curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -`
-- `sudo apt install -y nodejs`
-2. Clone the repository and check out the master branch: `git clone https://github.com/MichMich/MagicMirror`
-3. Enter the repository: `cd MagicMirror/`
-4. Install and run the app with: `npm install && npm start` \
-   For **Server Only** use: `npm install && node serveronly` .
-
-
-**:warning: Important!**
-
-- **The installation step for `npm install` will take a very long time**, often with little or no terminal response! \
-  For the RPi3 this is **~10** minutes and for the Rpi2 **~25** minutes. \
-  Do not interrupt or you risk getting a :broken_heart: by Raspberry Jam.
-
-
-Also note that:
-
-- `npm start` does **not** work via SSH. But you can use `DISPLAY=:0 nohup npm start &` instead. \
-  This starts the mirror on the remote display.
-- If you want to debug on Raspberry Pi you can use `npm start dev` which will start MM with *Dev Tools* enabled.
-- To access toolbar menu when in mirror mode, hit `ALT` key.
-- To toggle the (web) `Developer Tools` from mirror mode, use `CTRL-SHIFT-I` or `ALT` and select `View`.
-
-
-### Server Only
-
-In some cases, you want to start the application without an actual app window. In this case, you can start MagicMirror² in server only mode by manually running `node serveronly` or using Docker. This will start the server, after which you can open the application in your browser of choice. Detailed description below.
-
-**Important:** Make sure that you whitelist the interface/ip (`ipWhitelist`) in the server config where you want the client to connect to, otherwise it will not be allowed to connect to the server. You also need to set the local host `address` field to `0.0.0.0` in order for the RPi to listen on all interfaces and not only `localhost` (default).
-
-```javascript
-var config = {
-	address: "0.0.0.0",	// default is "localhost"
-	port: 8080,		// default
-	ipWhitelist: ["127.0.0.1", "::ffff:127.0.0.1", "::1", "::ffff:172.17.0.1"], // default -- need to add your IP here
-	...
-};
-```
-
-
-### Client Only
-
-This is when you already have a server running remotely and want your RPi to connect as a standalone client to this instance, to show the MM from the server. Then from your RPi, you run it with: `node clientonly --address 192.168.1.5 --port 8080`. (Specify the ip address and port number of the server)
-
-
-### Docker
-
-MagicMirror² in server only mode can be deployed using [Docker](https://docker.com). After a successful [Docker installation](https://docs.docker.com/engine/installation/) you just need to execute the following command in the shell:
-
-```bash
-docker run  -d \
-	--publish 80:8080 \
-	--restart always \
-	--volume ~/magic_mirror/config:/opt/magic_mirror/config \
-	--volume ~/magic_mirror/modules:/opt/magic_mirror/modules \
-	--name magic_mirror \
-	bastilimbach/docker-magicmirror
-```
-To get more information about the available Dockerfile versions and configurations head over to the respective [GitHub repository](https://github.com/bastilimbach/docker-MagicMirror).
 
 
 ## Configuration
@@ -181,41 +111,3 @@ git pull && npm install
 If you changed nothing more than the config or the modules, this should work without any problems.
 Type `git status` to see your changes, if there are any, you can reset them with `git reset --hard`. After that, git pull should be possible.
 
-
-## Community
-
-The community around the MagicMirror² is constantly growing. We even have a [forum](https://forum.magicmirror.builders) now where you can share your ideas, ask questions, help others and get inspired by other builders. We would love to see you there!
-
-## Contributing Guidelines
-
-Contributions of all kinds are welcome, not only in the form of code but also with regards bug reports and documentation.
-
-Please keep the following in mind:
-
-- **Bug Reports**:  Make sure you're running the latest version. If the issue(s) still persist: please open a clearly documented issue with a clear title.
-- **Minor Bug Fixes**: Please send a pull request with a clear explanation of the issue or a link to the issue it solves.
-- **Major Bug Fixes**: please discuss your approach in an GitHub issue before you start to alter a big part of the code.
-- **New Features**: please please discuss in a GitHub issue before you start to alter a big part of the code. Without discussion upfront, the pull request will not be accepted / merged.
-
-Thanks for your help in making MagicMirror² better!
-
-## Manifesto
-
-A real Manifesto is still to be written. Till then, Michael's response on [one of the repository issues](https://github.com/MichMich/MagicMirror/issues/1174) gives a great summary:
-
-> "... I started this project as an ultimate starter project for Raspberry Pi enthusiasts. As a matter of fact, for most of the contributors, the MagicMirror project is the first open source project they ever contributed to. This is one of the reasons why the MagicMirror project is featured in several RasPi magazines.
->
->The project has a lot of opportunities for improvement. We could use a powerful framework like Vue to ramp up the development speed. We could use SASS for better/easier css implementations. We could make it an NPM installable package. And as you say, we could bundle it up. The big downside of of of these changes is that it over complicates things: a user no longer will be able to open just one file and make a small modification and see how it works out.
->
->Of course, a bundled version can be complimentary to the regular un-bundled version. And I'm sure a lot of (new) users will opt for the bundled version. But this means those users won't be motivated to take a peek under the hood. They will just remain 'users'. They won't become contributors, and worse: they won't be motivated to take their first steps in software development.
->
->And to be honest: motivating curious users to step out of their comfort zone and take those first steps is what drives me in this project. Therefor my ultimate goal is this project is to keep it as accessible as possible."
->
-> ~ Michael Teeuw
-
-
-
-<p align="center">
-<br>
-	<a href="https://forum.magicmirror.builders/topic/728/magicmirror-is-voted-number-1-in-the-magpi-top-50"><img src="https://magicmirror.builders/img/magpi-best-watermark-custom.png" width="150" alt="MagPi Top 50"></a>
-</p>
