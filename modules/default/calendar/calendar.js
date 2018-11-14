@@ -21,7 +21,7 @@ Module.register("calendar", {
 		wrapEvents: false, // wrap events to multiple lines breaking at maxTitleLength
 		fetchInterval: 5 * 60 * 1000, // Update every 5 minutes.
 		animationSpeed: 2000,
-		fade: true,
+		fade: false,
 		urgency: 7,
 		timeFormat: "relative",
 		dateFormat: "MMM Do",
@@ -32,8 +32,8 @@ Module.register("calendar", {
 		fadePoint: 0.25, // Start on 1/4th of the list.
 		hidePrivate: false,
 		hideOngoing: false,
-		colored: false,
-		coloredSymbolOnly: false,
+		colored: true,
+		coloredSymbolOnly: true,
 		tableClass: "small",
 		calendars: [
 			{
