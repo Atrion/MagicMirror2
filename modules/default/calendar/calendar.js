@@ -22,13 +22,13 @@ Module.register("calendar", {
 		fetchInterval: 5 * 60 * 1000, // Update every 5 minutes.
 		animationSpeed: 2000,
 		fade: false,
-		urgency: 7,
+		urgency: 0,
 		timeFormat: "relative",
 		dateFormat: "MMM Do",
 		dateEndFormat: "HH:mm",
 		fullDayEventDateFormat: "MMM Do",
 		showEnd: false,
-		getRelative: 6,
+		getRelative: 0,
 		fadePoint: 0.25, // Start on 1/4th of the list.
 		hidePrivate: false,
 		hideOngoing: false,
